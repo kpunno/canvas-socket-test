@@ -31,24 +31,24 @@ reqCanvas.addEventListener("mousedown", (e) => {
 
 // Sends coordinates to the server
 reqCanvas.addEventListener("mousemove", (e) => {
-  if (isDrawing) {
-    reqCtx.lineTo(e.offsetX, e.offsetY);
-    reqCtx.stroke();
-    // Emits one pixel change to the server
-    socket.emit("change", {
-      x: e.offsetX,
-      y: e.offsetY,
-    });
-    pixelsSent++;
-    // console.log({ x: e.offsetX, y: e.offsetY });
-  }
+  if (!isDrawing) return;
+  reqCtx.lineTo(e.offsetX, e.offsetY);
+  reqCtx.stroke();
+  // Emits one pixel change to the server
+  socket.emit("change", {
+    x: e.offsetX,
+    y: e.offsetY,
+  });
+  pixelsSent++;
+  // console.log({ x: e.offsetX, y: e.offsetY });
 });
 
 // Changes pixels of the response canvas (reqCanvas)
 socket.on("change", (pixel) => {
   pixelsReceived++;
   // Arguments are x offset, y offset, x-size, y-size
-  resCtx.fillRect(pixel.x, pixel.y, 1, 1);
+  resCtx.lineTo(pixel.x, pixel.y);
+  resCtx.stroke();
 });
 
 reqCanvas.addEventListener("mouseup", () => {
