@@ -40,13 +40,13 @@ reqCanvas.addEventListener("mousemove", (e) => {
     y: e.offsetY,
   });
   pixelsSent++;
-  // console.log({ x: e.offsetX, y: e.offsetY });
 });
 
 // Changes pixels of the response canvas (reqCanvas)
 socket.on("change", (pixel) => {
   pixelsReceived++;
-  // Arguments are x offset, y offset, x-size, y-size
+  // We draw a smooth line
+  // BUG: does not work with multiple client connections
   resCtx.lineTo(pixel.x, pixel.y);
   resCtx.stroke();
 });
