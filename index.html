@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Vanilla Socket.IO</title>
 </head>
+
 <body>
   <h1>Client Canvas</h1>
+  <label for="brush-size">Brush size</label>
+  <input id="brush-size" type="text" value="1" />
+  <div>
+    <!-- This is the socket REQ canvas -->
+    <canvas id="request" style="background-color: rgb(214, 214, 214)" width="400" height="400"></canvas>
+    <!-- This is the socket RES canvas -->
+    <canvas id="response" style="background-color: rgb(223, 155, 155)" width="400" height="400"></canvas>
+  </div>
 
-  <!-- This is the socket REQ canvas -->
-  <canvas id="request" style="background-color: rgb(214, 214, 214)" width="400" height="400"></canvas>
-  <!-- This is the socket RES canvas -->
-  <canvas id="response" style="background-color: rgb(223, 155, 155)" width="400" height="400"></canvas>
-  
   <button id="report">Show transfer stats</button>
   <script src="/socket.io/socket.io.js"></script>
   <script src="client.js"></script>
   </div>
 </body>
-</html>
 
+</html>

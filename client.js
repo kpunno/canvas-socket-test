@@ -8,6 +8,7 @@ const messagesList = document.getElementById("messages");
 
 const reqCanvas = document.getElementById("request");
 const resCanvas = document.getElementById("response");
+const brushSize = document.getElementById("brush-size");
 const reqCtx = reqCanvas.getContext("2d");
 const resCtx = resCanvas.getContext("2d");
 const reportButton = document.getElementById("report");
@@ -22,6 +23,12 @@ reportButton.onclick = () => {
   console.log(`Client sent ${pixelsSent} pixels`);
   console.log(`Client received ${pixelsReceived} pixels`);
   socket.emit('report');
+}
+
+brushSize.onchange = (e) => {
+  let size = e.target.value;
+  reqCtx.lineWidth = size;
+  socket.emit('brush-size', size || 1);
 }
 
 reqCanvas.addEventListener("mousedown", (e) => {
@@ -51,7 +58,13 @@ socket.on("change", (pixel) => {
   resCtx.stroke();
 });
 
+socket.on('brush-size', (size) => {
+  resCtx.lineWidth = size;
+})
+
 reqCanvas.addEventListener("mouseup", () => {
+  // should tell the server that the line is done
+  // as of now, the client will connect previous line endings to new line beginnings
   isDrawing = false;
 });
 

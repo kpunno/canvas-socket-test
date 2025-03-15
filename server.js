@@ -20,6 +20,10 @@ io.on('connection', (socket) => {
     io.emit('change', pixel);
   });
 
+  socket.on('brush-size', size => {
+    io.emit('brush-size', size)    
+  })
+
   socket.on('report', ()=>{
     console.log(`Server receieved ${pixelsReceived} pixels`)
   })
